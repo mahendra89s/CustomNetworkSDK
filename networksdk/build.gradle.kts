@@ -65,7 +65,7 @@ fun getVersionName(): String {
 }
 
 fun getArtificatId(): String {
-    return "network-sdk"
+    return "networksdk"
 }
 
 publishing {
