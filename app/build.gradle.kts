@@ -71,4 +71,5 @@ dependencies {
 
     implementation (libs.hilt)
     kapt(libs.hiltCompiler)
+    implementation(project(":networksdk"))
 }
