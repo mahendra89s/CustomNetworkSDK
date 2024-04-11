@@ -1,11 +1,7 @@
 package com.example.networksdk.data.di
 
 import com.example.networksdk.data.MovieNetworkSDK
-import com.example.networksdk.data.datasource.MoviesDataSource
-import com.example.networksdk.data.datasource.MoviesDataSourceImpl
 import com.example.networksdk.data.interceptor.ApiKeyInterceptor
-import com.example.networksdk.data.repository.MoviesRepository
-import com.example.networksdk.data.repository.MoviesRepositoryImpl
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -20,27 +16,13 @@ import javax.inject.Singleton
 @InstallIn(SingletonComponent::class)
 @Module
 object NetworkModule {
-
-    @Provides
-    @Singleton
-    fun provideMovieDataSource(
-        retrofit: Retrofit
-    ): MoviesDataSource = MoviesDataSourceImpl(retrofit)
-
-    @Provides
-    @Singleton
-    fun provideMovieRepository(
-        moviesDataSource: MoviesDataSource
-    ): MoviesRepository = MoviesRepositoryImpl(moviesDataSource)
-
-
     @Provides
     @Singleton
     fun provideRetrofit(
         okHttpClient: OkHttpClient
     ): Retrofit = Retrofit
         .Builder()
-        .baseUrl("https://api.themoviedb.org/3/")
+        .baseUrl(MovieNetworkSDK.BASE_URL)
         .addConverterFactory(GsonConverterFactory.create())
         .client(okHttpClient)
         .build()
@@ -61,7 +43,5 @@ object NetworkModule {
 
     @Provides
     @Singleton
-    fun provideMovieNetworkSdk(
-        moviesRepository: MoviesRepository
-    ): MovieNetworkSDK = MovieNetworkSDK(moviesRepository)
+    fun provideMovieNetworkSDK(): MovieNetworkSDK = MovieNetworkSDK()
 }

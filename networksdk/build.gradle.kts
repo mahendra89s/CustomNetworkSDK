@@ -1,9 +1,13 @@
+import java.io.FileInputStream
+import java.util.*
+
 plugins {
     alias(libs.plugins.androidLibrary)
     alias(libs.plugins.jetbrainsKotlinAndroid)
     id("kotlin-parcelize")
     kotlin("kapt")
     id("com.google.dagger.hilt.android")
+    id("maven-publish")
 }
 
 android {
@@ -51,4 +55,41 @@ dependencies {
 
     implementation (libs.hilt)
     kapt(libs.hiltCompiler)
+}
+
+val githubProperties = Properties()
+githubProperties.load(FileInputStream(rootProject.file("github.properties")))
+
+fun getVersionName(): String {
+    return "1.0.2"
+}
+
+fun getArtificatId(): String {
+    return "network-sdk"
+}
+
+publishing {
+    publications {
+        create<MavenPublication>("gpr") {
+            run {
+                groupId = "com.network.sdk"
+                artifactId = getArtificatId()
+                version = getVersionName()
+                artifact("$buildDir/outputs/aar/${getArtificatId()}-release.aar")
+            }
+        }
+    }
+    repositories {
+        maven {
+            name = "GitHubPackages"
+
+            url = uri("https://maven.pkg.github.com/mahendra89s/CustomNetworkSDK")
+            credentials {
+                username = githubProperties["gpr.usr"] as String? ?: System.getenv("GPR_USER")
+                password =
+                    githubProperties["gpr.key"] as String? ?: System.getenv("GPR_API_KEY")
+
+            }
+        }
+    }
 }

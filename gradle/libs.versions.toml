@@ -13,7 +13,7 @@ material = "1.11.0"
 retrofit = "2.9.0"
 gson = "2.9.0"
 okhttp = "4.11.0"
-hilt_version = "2.42"
+hilt_version = "2.48.1"
 logging = "4.11.0"
 
 [libraries]
