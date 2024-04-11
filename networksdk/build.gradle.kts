@@ -57,7 +57,7 @@ dependencies {
     kapt(libs.hiltCompiler)
 }
 
-val githubProperties = Properties()
+/*val githubProperties = Properties()
 githubProperties.load(FileInputStream(rootProject.file("github.properties")))
 
 fun getVersionName(): String {
@@ -66,7 +66,7 @@ fun getVersionName(): String {
 
 fun getArtificatId(): String {
     return "networksdk"
-}
+}*/
 
 publishing{
     publications{
