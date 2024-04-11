@@ -68,6 +68,16 @@ fun getArtificatId(): String {
     return "networksdk"
 }
 
+publishing{
+    publications{
+        register<MavenPublication>("release"){
+            afterEvaluate{
+                from(components["release"])
+            }
+        }
+    }
+}
+/*
 publishing {
     publications {
         create<MavenPublication>("gpr") {
@@ -92,4 +102,4 @@ publishing {
             }
         }
     }
-}
+}*/
